@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
     {
         for (int i = 0; i < NumberOfPlayers; i++){
             Debug.Log("instanciado " + i);
-            GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -4, 0), Quaternion.identity);
+            GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
             paddles.Add(newPaddle);
         }
     }
