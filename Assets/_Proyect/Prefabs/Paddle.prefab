@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5649785825293603986}
   - component: {fileID: 4129880719068612474}
   m_Layer: 0
-  m_Name: PaddleTeclado
+  m_Name: Paddle
   m_TagString: Paddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
