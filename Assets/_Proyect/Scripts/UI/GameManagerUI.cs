@@ -28,7 +28,7 @@ public class GameManagerUI : MonoBehaviour
     public void UpdateScoreUI(int score)
     {
         if (scoreText != null)
-            scoreText.text = "P: " + score;
+            scoreText.text = "SCORE \n" + score;
     }
 
     // Muestra el panel de Game Over y actualiza el puntaje final
@@ -47,7 +47,7 @@ public class GameManagerUI : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // Se asigna al botón "Salir"
+    // Se asigna al botï¿½n "Salir"
     public void OnExitButton()
     {
         Application.Quit();
