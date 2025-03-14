@@ -21,8 +21,13 @@ public class GameManager : Singleton<GameManager>
         SpawnBall();
         StartCoroutine(EnviarVidaArduino());
 
-        if (GameManagerUI.instance != null)
+        if (GameManagerUI.instance != null){
             GameManagerUI.instance.UpdateScoreUI(score);
+            // Registrar la pelota y los paddles en el GameManagerUI
+            GameManagerUI.instance.RegisterBall(currentBall);
+            GameManagerUI.instance.RegisterPaddles(paddles);
+        }
+
     }
 
     IEnumerator EnviarVidaArduino()
