@@ -39,13 +39,6 @@ public class BallController : MonoBehaviour
                 velocity.y = verticalOffset;
                 rb.linearVelocity = velocity.normalized * speed;
             }
-            if (Mathf.Abs(velocity.x) < 0.1f)
-            {
-                float horizontalOffset = Random.Range(0.5f, 1f);
-                horizontalOffset *= (Random.value < 0.5f ? -1f : 1f);
-                velocity.x = horizontalOffset;
-                rb.linearVelocity = velocity.normalized * speed;
-            }
         }
     }
 
@@ -63,8 +56,8 @@ public class BallController : MonoBehaviour
         else
         {
             Vector2 vel = rb.linearVelocity;
-            vel.x += Random.Range(-0.2f, 0.2f);
-            vel.y += Random.Range(-0.4f, 0.4f);
+            vel.x += Random.Range(-0.3f, 0.3f);
+            vel.y += Random.Range(-0.2f, 0.2f);
             rb.linearVelocity = vel.normalized * speed;
         }
     }

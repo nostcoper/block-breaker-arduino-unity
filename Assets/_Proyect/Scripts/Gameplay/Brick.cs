@@ -1,9 +1,16 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class Brick : MonoBehaviour
 {
-    public int hitPoints = 1;             // Impactos necesarios para destruir el ladrillo
-    public GameObject destructionEffect;  // Efecto opcional al destruir el ladrillo
+    public int hitPoints = 1;             
+    public GameObject destructionEffect; 
+    public List<Sprite> sprites = new List<Sprite>();
+    private SpriteRenderer spriteRenderer;
+    void Start(){
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -16,13 +23,18 @@ public class Brick : MonoBehaviour
                 {
                     Instantiate(destructionEffect, transform.position, Quaternion.identity);
                 }
-                // Suma 1 punto por ladrillo destruido
-                if (GameManager.Instance != null)
-                {
-                    GameManager.Instance.AddScore(1);
-                }
+
                 Destroy(gameObject);
+
+            } else{
+                Debug.Log(sprites[3-hitPoints].name);
             }
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.AddScore(1);
+            }
+            
         }
     }
 }
