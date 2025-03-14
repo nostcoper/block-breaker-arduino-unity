@@ -17,9 +17,9 @@ public class Brick : MonoBehaviour
                     Instantiate(destructionEffect, transform.position, Quaternion.identity);
                 }
                 // Suma 1 punto por ladrillo destruido
-                if (GameManager.Intance != null)
+                if (GameManager.Instance != null)
                 {
-                    GameManager.Intance.AddScore(1);
+                    GameManager.Instance.AddScore(1);
                 }
                 Destroy(gameObject);
             }

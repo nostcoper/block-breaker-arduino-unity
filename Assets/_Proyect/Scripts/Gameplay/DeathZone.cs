@@ -7,9 +7,9 @@ public class DeathZone : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-            if (GameManager.Intance != null)
+            if (GameManager.Instance != null)
             {
-                GameManager.Intance.LoseLife();
+                GameManager.Instance.LoseLife();
             }
             else
             {
