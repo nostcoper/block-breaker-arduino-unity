@@ -27,7 +27,7 @@ public class Brick : MonoBehaviour
                 Destroy(gameObject);
 
             } else{
-                Debug.Log(sprites[3-hitPoints].name);
+                spriteRenderer.sprite = sprites[3-hitPoints];
             }
 
             if (GameManager.Instance != null)
