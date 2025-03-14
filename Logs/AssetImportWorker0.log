@@ -1,29 +1,29 @@
 Using pre-set license
 Built from '6000.0/staging' branch; Version is '6000.0.40f1 (157d81624ddf) revision 1408385'; Using compiler version '193933523'; Build Type 'Release'
-OS: 'Windows 11  (10.0.22631) 64bit CoreSingleLanguage' Language: 'es' Physical Memory: 16052 MB
+OS: 'Windows 10  (10.0.19045) 64bit CoreSingleLanguage' Language: 'es' Physical Memory: 10178 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
 
 COMMAND LINE ARGUMENTS:
-C:\Program Files\Unity\Hub\Editor\6000.0.40f1\Editor\Unity.exe
+E:\Archivos del Programa\Unity Download\6000.0.40f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker0
 -projectPath
-C:/Proyectos/2025-1/Videojuegos 3/block-breaker-arduino-unity
+E:/Documentos/Universidad/Videojuegos-3/block-breaker-arduino-unity
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-59343
+63750
 -job-worker-count
-5
+3
 -background-job-worker-count
 8
 -gc-helper-count
 1
-Successfully changed project path to: C:/Proyectos/2025-1/Videojuegos 3/block-breaker-arduino-unity
-C:/Proyectos/2025-1/Videojuegos 3/block-breaker-arduino-unity
+Successfully changed project path to: E:/Documentos/Universidad/Videojuegos-3/block-breaker-arduino-unity
+E:/Documentos/Universidad/Videojuegos-3/block-breaker-arduino-unity
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
     "memorysetup-bucket-allocator-bucket-count=8"
@@ -59,13 +59,13 @@ C:/Proyectos/2025-1/Videojuegos 3/block-breaker-arduino-unity
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [37592]  Target information:
+Player connection [20040]  Target information:
 
-Player connection [37592]  * "[IP] 192.168.1.4 [Port] 0 [Flags] 2 [Guid] 3588123543 [EditorId] 3588123543 [Version] 1048832 [Id] WindowsEditor(7,Serrato) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [20040]  * "[IP] 192.168.1.23 [Port] 0 [Flags] 2 [Guid] 1883381737 [EditorId] 1883381737 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-7GEB3K2) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [37592] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [37592] Host joined alternative multi-casting on [225.0.0.222:34997]...
-JobSystem: Creating JobQueue using job-worker-count value 5
+Player connection [20040] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [20040] Host joined alternative multi-casting on [225.0.0.222:34997]...
+JobSystem: Creating JobQueue using job-worker-count value 3
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
@@ -76,59 +76,60 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 2.88 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 1443.61 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.40f1 (157d81624ddf)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Proyectos/2025-1/Videojuegos 3/block-breaker-arduino-unity/Assets
+[Subsystems] Discovering subsystems at path E:/Archivos del Programa/Unity Download/6000.0.40f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/Documentos/Universidad/Videojuegos-3/block-breaker-arduino-unity/Assets
 GfxDevice: creating device client; kGfxThreadingModeNonThreaded
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce RTX 3050 Laptop GPU (ID=0x25a2)
-    Vendor:   NVIDIA
-    VRAM:     3964 MB
-    Driver:   32.0.15.6119
+    Renderer: Radeon RX 560X Series (ID=0x67ef)
+    Vendor:   ATI
+    VRAM:     4076 MB
+    Driver:   31.0.21912.14
+Shader Hidden/ProbeVolume/VoxelizeScene is not supported: GPU does not support conservative rasterization
 Initialize mono
-Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/Managed'
-Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
-Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56408
+Mono path[0] = 'E:/Archivos del Programa/Unity Download/6000.0.40f1/Editor/Data/Managed'
+Mono path[1] = 'E:/Archivos del Programa/Unity Download/6000.0.40f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'E:/Archivos del Programa/Unity Download/6000.0.40f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56192
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.004128 seconds.
-- Loaded All Assemblies, in  0.610 seconds
+Register platform support module: E:/Archivos del Programa/Unity Download/6000.0.40f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.039110 seconds.
+- Loaded All Assemblies, in  3.370 seconds
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.436 seconds
-Domain Reload Profiling: 1044ms
-	BeginReloadAssembly (226ms)
+- Finished resetting the current domain, in  3.574 seconds
+Domain Reload Profiling: 7028ms
+	BeginReloadAssembly (1708ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (49ms)
-	RebuildNativeTypeToScriptingClass (18ms)
-	initialDomainReloadingComplete (64ms)
-	LoadAllAssembliesAndSetupDomain (251ms)
-		LoadAssemblies (223ms)
+	RebuildCommonClasses (343ms)
+	RebuildNativeTypeToScriptingClass (23ms)
+	initialDomainReloadingComplete (462ms)
+	LoadAllAssembliesAndSetupDomain (832ms)
+		LoadAssemblies (1708ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (248ms)
-			TypeCache.Refresh (246ms)
-				TypeCache.ScanAssembly (226ms)
+		AnalyzeDomain (812ms)
+			TypeCache.Refresh (802ms)
+				TypeCache.ScanAssembly (713ms)
 			BuildScriptInfoCaches (0ms)
-			ResolveRequiredComponents (0ms)
-	FinalizeReload (437ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (3661ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (397ms)
+		SetupLoadedEditorAssemblies (3409ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (39ms)
-			SetLoadedEditorAssemblies (8ms)
-			BeforeProcessingInitializeOnLoad (75ms)
-			ProcessInitializeOnLoadAttributes (209ms)
-			ProcessInitializeOnLoadMethodAttributes (65ms)
+			InitializePlatformSupportModulesInManaged (55ms)
+			SetLoadedEditorAssemblies (11ms)
+			BeforeProcessingInitializeOnLoad (123ms)
+			ProcessInitializeOnLoadAttributes (1200ms)
+			ProcessInitializeOnLoadMethodAttributes (2021ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -137,56 +138,73 @@ Domain Reload Profiling: 1044ms
 Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.009 seconds
-Refreshing native plugins compatible for Editor in 1.24 ms, found 4 plugins.
+- Loaded All Assemblies, in  6.433 seconds
+Refreshing native plugins compatible for Editor in 113.10 ms, found 4 plugins.
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.934 seconds
-Domain Reload Profiling: 1940ms
-	BeginReloadAssembly (213ms)
+- Finished resetting the current domain, in  6.268 seconds
+Domain Reload Profiling: 12712ms
+	BeginReloadAssembly (759ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (9ms)
+		DisableScriptedObjects (16ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (36ms)
-	RebuildCommonClasses (43ms)
-	RebuildNativeTypeToScriptingClass (16ms)
-	initialDomainReloadingComplete (28ms)
-	LoadAllAssembliesAndSetupDomain (705ms)
-		LoadAssemblies (508ms)
+		CreateAndSetChildDomain (126ms)
+	RebuildCommonClasses (110ms)
+	RebuildNativeTypeToScriptingClass (32ms)
+	initialDomainReloadingComplete (71ms)
+	LoadAllAssembliesAndSetupDomain (5456ms)
+		LoadAssemblies (4361ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (315ms)
-			TypeCache.Refresh (232ms)
-				TypeCache.ScanAssembly (213ms)
-			BuildScriptInfoCaches (68ms)
-			ResolveRequiredComponents (12ms)
-	FinalizeReload (935ms)
+		AnalyzeDomain (1510ms)
+			TypeCache.Refresh (1279ms)
+				TypeCache.ScanAssembly (1200ms)
+			BuildScriptInfoCaches (191ms)
+			ResolveRequiredComponents (32ms)
+	FinalizeReload (6284ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (741ms)
+		SetupLoadedEditorAssemblies (4515ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (2ms)
-			SetLoadedEditorAssemblies (6ms)
-			BeforeProcessingInitializeOnLoad (142ms)
-			ProcessInitializeOnLoadAttributes (443ms)
-			ProcessInitializeOnLoadMethodAttributes (143ms)
+			InitializePlatformSupportModulesInManaged (7ms)
+			SetLoadedEditorAssemblies (14ms)
+			BeforeProcessingInitializeOnLoad (437ms)
+			ProcessInitializeOnLoadAttributes (2168ms)
+			ProcessInitializeOnLoadMethodAttributes (1883ms)
 			AfterProcessingInitializeOnLoad (4ms)
-			EditorAssembliesLoaded (0ms)
+			EditorAssembliesLoaded (1ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (6ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
-Refreshing native plugins compatible for Editor in 3.00 ms, found 4 plugins.
+		AwakeInstancesAfterBackupRestoration (42ms)
+Shader Hidden/ProbeVolume/VoxelizeScene is not supported: GPU does not support conservative rasterization
+Launched and connected shader compiler UnityShaderCompiler.exe after 3.21 seconds
+Refreshing native plugins compatible for Editor in 152.88 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 227 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 6639 unused Assets / (4.9 MB). Loaded Objects now: 7367.
-Memory consumption went from 179.7 MB to 174.8 MB.
-Total: 12.337900 ms (FindLiveObjects: 0.768800 ms CreateObjectMapping: 0.986500 ms MarkObjects: 6.672100 ms  DeleteObjects: 3.908100 ms)
+Unloading 6639 unused Assets / (2.1 MB). Loaded Objects now: 7365.
+Memory consumption went from 175.6 MB to 173.5 MB.
+Total: 99.100900 ms (FindLiveObjects: 2.805100 ms CreateObjectMapping: 44.533400 ms MarkObjects: 46.710000 ms  DeleteObjects: 5.047300 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 10597.848493 seconds.
-  path: Assets/_Proyect/Scripts/Gameplay/BallController.cs
-  artifactKey: Guid(17ec77d8f1beb3047958e6cc13b9f6f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/_Proyect/Scripts/Gameplay/BallController.cs using Guid(17ec77d8f1beb3047958e6cc13b9f6f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'eaa79877b2dfe4ff1aa0a37319f153ca') in 0.0099973 seconds
+  Time since last request: 67083.915435 seconds.
+  path: Assets/_Proyect
+  artifactKey: Guid(148bb345332b95142b4958eba7ea9e83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_Proyect using Guid(148bb345332b95142b4958eba7ea9e83) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2d699b6e26ccba1548d2bab49bd43e4c') in 0.4261823 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/_Proyect/Prefabs
+  artifactKey: Guid(969bc2345caa84a4a88fdaf5f72b2d31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_Proyect/Prefabs using Guid(969bc2345caa84a4a88fdaf5f72b2d31) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'bc0d8a3b73c17151f9a1d13c31cf74d7') in 0.000958 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/_Proyect/Prefabs/Ball.prefab
+  artifactKey: Guid(1830a6004899c2248962fcf8ffbf39b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_Proyect/Prefabs/Ball.prefab using Guid(1830a6004899c2248962fcf8ffbf39b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f9c0207d7eae7d6957926978b6b6082b') in 1.2432711 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 10
 
