@@ -49,37 +49,25 @@ public class BallController : MonoBehaviour
         }
     }
 
-void OnCollisionEnter2D(Collision2D collision)
-{
-    if (!isLaunched)
-        return;
-
-    if (collision.gameObject.CompareTag("Paddle"))
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        float x = HitFactor(transform.position, collision.transform.position, collision.collider.bounds.size.x);
-        Vector2 dir = new Vector2(x, 1).normalized;
+        if (!isLaunched)
+            return;
 
-        // Asegurar que la velocidad Y no sea demasiado baja
-        if (Mathf.Abs(dir.y) < 0.3f)
-            dir.y = Mathf.Sign(dir.y) * 0.3f;
-
-        rb.linearVelocity = dir * speed;
+        if (collision.gameObject.CompareTag("Paddle"))
+        {
+            float x = HitFactor(transform.position, collision.transform.position, collision.collider.bounds.size.x);
+            Vector2 dir = new Vector2(x, 1).normalized;
+            rb.linearVelocity = dir * speed;
+        }
+        else
+        {
+            Vector2 vel = rb.linearVelocity;
+            vel.x += Random.Range(-0.2f, 0.2f);
+            vel.y += Random.Range(-0.4f, 0.4f);
+            rb.linearVelocity = vel.normalized * speed;
+        }
     }
-    else
-    {
-        Vector2 vel = rb.linearVelocity;
-        vel.x += Random.Range(-0.2f, 0.2f);
-        vel.y += Random.Range(-0.2f, 0.2f);
-
-        vel = vel.normalized;
-
-        if (Mathf.Abs(vel.y) < 0.3f)
-            vel.y = Mathf.Sign(vel.y) * 0.3f;
-
-        rb.linearVelocity = vel * speed;
-    }
-}
-
 
     float HitFactor(Vector2 ballPos, Vector2 paddlePos, float paddleWidth)
     {
