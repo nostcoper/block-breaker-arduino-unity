@@ -15,13 +15,11 @@ public class BallController : MonoBehaviour
     {
         if (!isLaunched)
         {
-            // La bola se mantiene pegada al paddle antes del lanzamiento
             GameObject paddle = GameObject.FindWithTag("Paddle");
             if (paddle != null)
             {
                 transform.position = paddle.transform.position + new Vector3(0, 0.5f, 0);
             }
-            // Lanzamiento con la tecla espacio
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 isLaunched = true;
@@ -66,7 +64,7 @@ public class BallController : MonoBehaviour
         {
             Vector2 vel = rb.linearVelocity;
             vel.x += Random.Range(-0.2f, 0.2f);
-            vel.y += Random.Range(-0.2f, 0.2f);
+            vel.y += Random.Range(-0.4f, 0.4f);
             rb.linearVelocity = vel.normalized * speed;
         }
     }
@@ -76,7 +74,6 @@ public class BallController : MonoBehaviour
         return (ballPos.x - paddlePos.x) / paddleWidth;
     }
 
-    // Método para resetear la bola al estado inicial
     public void ResetBall()
     {
         isLaunched = false;
