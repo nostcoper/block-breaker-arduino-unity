@@ -49,10 +49,10 @@ public class BallController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!isLaunched)
-            return;
+void OnCollisionEnter2D(Collision2D collision)
+{
+    if (!isLaunched)
+        return;
 
         if (collision.gameObject.CompareTag("Paddle"))
         {
@@ -68,6 +68,21 @@ public class BallController : MonoBehaviour
             rb.linearVelocity = vel.normalized * speed;
         }
     }
+    else
+    {
+        Vector2 vel = rb.linearVelocity;
+        vel.x += Random.Range(-0.2f, 0.2f);
+        vel.y += Random.Range(-0.2f, 0.2f);
+
+        vel = vel.normalized;
+
+        if (Mathf.Abs(vel.y) < 0.3f)
+            vel.y = Mathf.Sign(vel.y) * 0.3f;
+
+        rb.linearVelocity = vel * speed;
+    }
+}
+
 
     float HitFactor(Vector2 ballPos, Vector2 paddlePos, float paddleWidth)
     {

@@ -1885,7 +1885,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c777cfd744b7e14c9c6ce6134c382fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   NumberOfPlayers: 1
+=======
+  NumberOfPlayers: 2
+>>>>>>> main
   score: 0
   lives: 3
   ballPrefab: {fileID: 7594298400835398744, guid: 1830a6004899c2248962fcf8ffbf39b7, type: 3}
@@ -1909,6 +1913,7 @@ MonoBehaviour:
   SpacingX: 1.8
   SpacingY: 0.8
   startPos: {x: -7.5, y: 3}
+<<<<<<< HEAD
 --- !u!1 &1678477572
 GameObject:
   m_ObjectHideFlags: 0
@@ -2057,6 +2062,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+=======
+>>>>>>> main
 --- !u!1 &1868184023
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,5 +2342,12 @@ SceneRoots:
   - {fileID: 96698858}
   - {fileID: 1520571770}
   - {fileID: 47723619}
+<<<<<<< HEAD
+=======
+  - {fileID: 708485204}
+  - {fileID: 1935572862}
+  - {fileID: 1153313858}
+  - {fileID: 478517061}
+>>>>>>> main
   - {fileID: 1481143336}
   - {fileID: 1488516170}
