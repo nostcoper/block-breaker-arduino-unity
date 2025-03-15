@@ -1,12 +1,18 @@
 using UnityEngine;
 
+using System.Collections.Generic;
+
 public class BrickSpawner : MonoBehaviour
 {
     public GameObject brickPrefab;
-    public int rows = 5;        
-    public int columns = 10;     
-    public float SpacingX = 0.6f;   
-    public float SpacingY = 0.6f;     
+    public int rows = 5;
+    public int columns = 10;
+    public float SpacingX = 0.6f;
+    public float SpacingY = 0.6f;
+
+    //PRUEBA
+    private List<GameObject> bricks = new List<GameObject>();
+
 
     void Start()
     {
@@ -19,7 +25,18 @@ public class BrickSpawner : MonoBehaviour
             for (int col = 0; col < columns; col++)
             {
                 Vector3 pos = new Vector3(startPos.x + col * SpacingX, startPos.y - row * SpacingY, 0);
-                Instantiate(brickPrefab, pos, Quaternion.identity);
+
+
+                GameObject brick = Instantiate(brickPrefab, pos, Quaternion.identity);
+
+                //Agregar a la lista
+                bricks.Add(brick);
+            }
+
+            // Registrar los ladrillos con GameManagerUI
+            if (GameManagerUI.instance != null)
+            {
+                GameManagerUI.instance.RegisterBricks(bricks);
             }
         }
     }

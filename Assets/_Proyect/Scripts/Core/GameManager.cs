@@ -3,10 +3,11 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private int NumberOfPlayers;
+    [SerializeField] public int NumberOfPlayers = 1; //Se cambio de private a public
     public int score = 0;
     public int lives = 3;
     public GameObject ballPrefab;
@@ -14,15 +15,24 @@ public class GameManager : Singleton<GameManager>
     private GameObject currentBall;
     public List<GameObject> paddles = new List<GameObject>();
 
+
     void Start()
     {
-        Debug.Log(NumberOfPlayers);
+        Debug.Log("Num Jugadores: " + NumberOfPlayers);
+
+       
+        
         SpawnPaddle();
         SpawnBall();
         StartCoroutine(EnviarVidaArduino());
 
-        if (GameManagerUI.instance != null)
+        if (GameManagerUI.instance != null){
             GameManagerUI.instance.UpdateScoreUI(score);
+            // Registrar la pelota y los paddles en el GameManagerUI
+            GameManagerUI.instance.RegisterBall(currentBall);
+            GameManagerUI.instance.RegisterPaddles(paddles);
+        }
+
     }
 
     IEnumerator EnviarVidaArduino()
@@ -33,15 +43,25 @@ public class GameManager : Singleton<GameManager>
 
     void SpawnPaddle()
     {
-        for (int i = 0; i < NumberOfPlayers; i++){
-            Debug.Log("instanciado " + i);
-            GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
-            paddles.Add(newPaddle);
-        }
+        paddlePrefab = Resources.Load<GameObject>("Prefabs/Paddle");
+        
+        GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
+        paddles.Add(newPaddle);
+        
+        Debug.Log("Holaaa");
+        // for (int i = 0; i < NumberOfPlayers; i++){
+        //     Debug.Log("instanciado " + i);
+        //     GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
+        //     paddles.Add(newPaddle);
+        // }
+        
     }
 
     void SpawnBall()
     {
+        
+        ballPrefab = Resources.Load<GameObject>("Prefabs/Ball");
+        Debug.Log(ballPrefab);
         if (currentBall == null)
         {
             currentBall = Instantiate(ballPrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
@@ -77,4 +97,10 @@ public class GameManager : Singleton<GameManager>
         if (ArduinoControllerPot.Instance != null)
             ArduinoControllerPot.Instance.SendToArduino("L:" + lives);
     }
+
+    public void RedirectScene(String name){
+        SceneManager.LoadScene(name);
+    }
 }
+
+
