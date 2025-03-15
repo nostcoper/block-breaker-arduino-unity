@@ -16,6 +16,8 @@ public class GameManagerUI : MonoBehaviour
     public GameObject gameOverPanel; // Panel que se activa al Game Over
     public TextMeshProUGUI gameOverScoreText;   // Texto para mostrar el puntaje final en Game Over
 
+    public Button gameOverExit; //Boton para salir en game over
+
     //PRUEBA
 
     [Header("Referencias de Juego")]
@@ -34,6 +36,10 @@ public class GameManagerUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start(){
+        gameOverExit.onClick.AddListener(()=>GameManager.Instance.RedirectScene("MainMenu"));
     }
 
     // Actualiza el texto del puntaje
