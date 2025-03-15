@@ -4,10 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine.UIElements;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] public int NumberOfPlayers = 1; //Se cambio de private a public
+    [SerializeField] public int NumberOfPlayers = 1;
     public int score = 0;
     public int lives = 3;
     public GameObject ballPrefab;
@@ -24,7 +25,7 @@ public class GameManager : Singleton<GameManager>
         
         SpawnPaddle();
         SpawnBall();
-        StartCoroutine(EnviarVidaArduino());
+        //StartCoroutine(EnviarVidaArduino());
 
         if (GameManagerUI.instance != null){
             GameManagerUI.instance.UpdateScoreUI(score);
@@ -35,11 +36,11 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    IEnumerator EnviarVidaArduino()
+/*     IEnumerator EnviarVidaArduino()
     {
         yield return new WaitForSeconds(0.5f);
         SendLivesToArduino();
-    }
+    } */
 
     void SpawnPaddle()
     {
@@ -48,7 +49,7 @@ public class GameManager : Singleton<GameManager>
         GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
         paddles.Add(newPaddle);
         
-        Debug.Log("Holaaa");
+        Debug.Log(GameManager.Instance.paddles[0].name);
         // for (int i = 0; i < NumberOfPlayers; i++){
         //     Debug.Log("instanciado " + i);
         //     GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
@@ -78,7 +79,7 @@ public class GameManager : Singleton<GameManager>
     public void LoseLife()
     {
         lives--;
-        SendLivesToArduino();
+        //SendLivesToArduino();
 
         if (lives > 0)
         {
@@ -92,11 +93,11 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    void SendLivesToArduino()
+/*     void SendLivesToArduino()
     {
         if (ArduinoControllerPot.Instance != null)
             ArduinoControllerPot.Instance.SendToArduino("L:" + lives);
-    }
+    } */
 
     public void RedirectScene(String name){
         SceneManager.LoadScene(name);
