@@ -8,6 +8,8 @@ public class Brick : MonoBehaviour
     public GameObject destructionEffect; 
     public List<Sprite> sprites = new List<Sprite>();
     private SpriteRenderer spriteRenderer;
+
+    
     void Start(){
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
