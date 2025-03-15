@@ -2611,8 +2611,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brickPrefab: {fileID: 47889542711310647, guid: 2dff1acf14754544a868880f28f31843, type: 3}
-  rows: 4
-  columns: 9
+  rows: 5
+  columns: 8
   SpacingX: 1.6
   SpacingY: 0.6
 --- !u!114 &8744804971366309722
@@ -2627,12 +2627,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c777cfd744b7e14c9c6ce6134c382fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberOfPlayers: 1
+  NumberOfPlayers: 2
   score: 0
   lives: 3
   ballPrefab: {fileID: 7594298400835398744, guid: 1830a6004899c2248962fcf8ffbf39b7, type: 3}
   paddlePrefab: {fileID: 1134469212216760597, guid: 0ce208a279da63f46a6551aea88734e2, type: 3}
   paddles: []
+  keyboardController: {fileID: 11400000, guid: bbc88dbbaa8aee94f97156ffe05123dd, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

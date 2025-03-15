@@ -27,6 +27,8 @@ public class MenuManagerUI : MonoBehaviour
 
     private void OnPlayButtonClicked()
     {
+        //Destroy(GameManager.Instance);
+        Debug.Log("PRESIONANDO BOTON SALIR");
         SceneManager.LoadScene("MainLevel");
     }
 

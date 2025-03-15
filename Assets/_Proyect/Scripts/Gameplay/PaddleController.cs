@@ -7,6 +7,7 @@ public class PaddleController : MonoBehaviour
     private float leftBoundary;
     private float rightBoundary;
     private float paddleHalfWidth;
+    public IPaddleController Controller;
     
     void Start()
     {
@@ -24,6 +25,11 @@ public class PaddleController : MonoBehaviour
         CalculateScreenBoundaries();
     }
     
+    public void SetController(IPaddleController newController)
+    {
+        Controller = newController;
+    }
+
     void CalculateScreenBoundaries()
     {
         Vector3 screenLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, transform.position.z - mainCamera.transform.position.z));
@@ -34,10 +40,9 @@ public class PaddleController : MonoBehaviour
     
     void FixedUpdate()
     {
-        float input = Input.GetAxis("Horizontal");
+        float input = Controller.GetMovementInput();
         Vector3 pos = transform.position;
         pos.x += input * speed * Time.deltaTime;
-    
         pos.x = Mathf.Clamp(pos.x, leftBoundary, rightBoundary);
         transform.position = pos;
     }

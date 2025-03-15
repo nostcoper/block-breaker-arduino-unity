@@ -3,7 +3,7 @@ using System.IO.Ports;
 
 public class ArduinoController : MonoBehaviour
 {
-    // Cambia "COM3" por el puerto al que está conectado tu Arduino
+    // Cambia "COM3" por el puerto al que estï¿½ conectado tu Arduino
     SerialPort sp = new SerialPort("COM4", 9600);
 
     void Start()
@@ -42,7 +42,7 @@ public class ArduinoController : MonoBehaviour
         }
     }
 
-    // Función para enviar comandos al Arduino
+    // Funciï¿½n para enviar comandos al Arduino
     void EnviarComando(string comando)
     {
         if (sp.IsOpen)
@@ -52,13 +52,13 @@ public class ArduinoController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("El puerto serial no está abierto.");
+            Debug.LogWarning("El puerto serial no estï¿½ abierto.");
         }
     }
 
     void OnApplicationQuit()
     {
-        // Al cerrar la aplicación, se cierra el puerto serial
+        // Al cerrar la aplicaciï¿½n, se cierra el puerto serial
         if (sp.IsOpen)
         {
             sp.Close();

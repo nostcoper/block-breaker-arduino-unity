@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using UnityEngine.UIElements;
 
+
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] public int NumberOfPlayers = 1;
@@ -15,53 +16,52 @@ public class GameManager : Singleton<GameManager>
     public GameObject paddlePrefab;
     private GameObject currentBall;
     public List<GameObject> paddles = new List<GameObject>();
-
+    public KeyboardController keyboardController;
 
     void Start()
     {
         Debug.Log("Num Jugadores: " + NumberOfPlayers);
-
-       
-        
         SpawnPaddle();
         SpawnBall();
-        //StartCoroutine(EnviarVidaArduino());
+        StartCoroutine(EnviarVidaArduino());
 
         if (GameManagerUI.instance != null){
             GameManagerUI.instance.UpdateScoreUI(score);
-            // Registrar la pelota y los paddles en el GameManagerUI
             GameManagerUI.instance.RegisterBall(currentBall);
             GameManagerUI.instance.RegisterPaddles(paddles);
         }
 
     }
 
-/*     IEnumerator EnviarVidaArduino()
+      IEnumerator EnviarVidaArduino()
     {
         yield return new WaitForSeconds(0.5f);
         SendLivesToArduino();
-    } */
+    } 
 
-    void SpawnPaddle()
-    {
-        paddlePrefab = Resources.Load<GameObject>("Prefabs/Paddle");
-        
-        GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
+void SpawnPaddle()
+{
+    float screenWidth = Camera.main.orthographicSize * 2.0f * Camera.main.aspect;
+    
+    float paddleWidth = paddlePrefab.GetComponent<SpriteRenderer>().bounds.size.x;
+    float totalPaddlesWidth = paddleWidth * NumberOfPlayers;
+    
+    float usableWidth = screenWidth * 0.8f;
+    float spacing = (usableWidth - totalPaddlesWidth) / (NumberOfPlayers + 1);
+    
+    float startX = -screenWidth / 2 + (screenWidth - usableWidth) / 2 + spacing;
+    
+    for (int i = 0; i < NumberOfPlayers; i++) {
+        Debug.Log("Instanciando paddle " + i);
+        float xPos = startX + (paddleWidth / 2) + i * (paddleWidth + spacing);
+        GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(xPos, -3.5f, 0), Quaternion.identity);
+        newPaddle.GetComponent<PaddleController>().SetController(keyboardController);
         paddles.Add(newPaddle);
-        
-        Debug.Log(GameManager.Instance.paddles[0].name);
-        // for (int i = 0; i < NumberOfPlayers; i++){
-        //     Debug.Log("instanciado " + i);
-        //     GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
-        //     paddles.Add(newPaddle);
-        // }
-        
     }
+}
 
     void SpawnBall()
     {
-        
-        ballPrefab = Resources.Load<GameObject>("Prefabs/Ball");
         Debug.Log(ballPrefab);
         if (currentBall == null)
         {
@@ -93,11 +93,11 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-/*     void SendLivesToArduino()
+     void SendLivesToArduino()
     {
         if (ArduinoControllerPot.Instance != null)
             ArduinoControllerPot.Instance.SendToArduino("L:" + lives);
-    } */
+    } 
 
     public void RedirectScene(String name){
         SceneManager.LoadScene(name);

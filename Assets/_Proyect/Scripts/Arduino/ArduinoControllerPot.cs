@@ -4,7 +4,7 @@ using System.IO.Ports;
 public class ArduinoControllerPot : Singleton<ArduinoControllerPot>
 {   
 
-    public string portName = "COM3";
+    public string portName = "COM4";
     public int baudRate = 9600;
     private SerialPort serialPort;
 
