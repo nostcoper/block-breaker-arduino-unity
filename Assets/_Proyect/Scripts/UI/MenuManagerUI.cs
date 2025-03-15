@@ -27,11 +27,7 @@ public class MenuManagerUI : MonoBehaviour
 
     private void OnPlayButtonClicked()
     {
-        // // Establecer el número de jugadores en el GameManager
-        // GameManager.Instance.NumberOfPlayers = numberOfPlayers;
         SceneManager.LoadScene("MainLevel");
-        // GameManager.Instance.paddlePrefab = paddlePrefab;
-        // GameManager.Instance.ballPrefab = ballPrefab;
     }
 
 }

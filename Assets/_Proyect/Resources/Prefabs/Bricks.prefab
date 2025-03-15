@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9f7b64a1680664ca8bedac6ac26040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 3
+  hitPoints: 1
   destructionEffect: {fileID: 4794043405585894037, guid: 37138c0c33167b04fa1fb90b7f5a794f, type: 3}
   sprites:
   - {fileID: 21300000, guid: cf04eebf0660dd3458db2fc1bd508034, type: 3}
