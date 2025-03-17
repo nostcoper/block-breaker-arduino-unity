@@ -1854,10 +1854,10 @@ RectTransform:
   m_Father: {fileID: 1481143336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 775, y: 96.72}
-  m_Pivot: {x: 0, y: 1}
+  m_SizeDelta: {x: 0, y: 97.87}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1051975438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2857,10 +2857,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brickPrefab: {fileID: 47889542711310647, guid: 2dff1acf14754544a868880f28f31843, type: 3}
   rows: 5
-  columns: 8
+  columns: 10
   SpacingX: 1.6
   SpacingY: 0.6
-  currentProgression: -1
+  currentProgression: 0
   bricks: []
   currentHitpoint: 1
 --- !u!114 &8744804971366309722
@@ -2875,7 +2875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c777cfd744b7e14c9c6ce6134c382fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberOfPlayers: 2
+  NumberOfPlayers: 1
   score: 0
   lives: 3
   ballPrefab: {fileID: 7594298400835398744, guid: 1830a6004899c2248962fcf8ffbf39b7, type: 3}

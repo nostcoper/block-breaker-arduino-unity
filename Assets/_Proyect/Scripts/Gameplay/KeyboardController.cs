@@ -6,7 +6,7 @@ public class KeyboardController : ScriptableObject, IPaddleController
     private float speed;
     public bool GetLaunchInput()
     {
-        throw new System.NotImplementedException();
+        return Input.GetKeyDown(KeyCode.Space);
     }
 
     public float GetMovementInput()

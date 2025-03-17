@@ -35,10 +35,10 @@ public class GameManager : Singleton<GameManager>
     {
         score = 0;
         lives = 3;
-        
+        SendLivesToArduino();
         SpawnElements();
         GetComponent<BrickSpawner>().currentHitpoint = 1;
-        GetComponent<BrickSpawner>().currentProgression = -1;
+        GetComponent<BrickSpawner>().currentProgression = 0;
         GetComponent<BrickSpawner>().SpawnBricks();
 
         if (GameManagerUI.instance != null){
@@ -54,7 +54,7 @@ public class GameManager : Singleton<GameManager>
         Debug.Log(remainingBlocks.Count);
         if (remainingBlocks.Count == 0)
         {
-            Debug.Log("¡Todos los bloques han sido destruidos!");
+            GetComponent<BrickSpawner>().IncreaseProgression();
             GetComponent<BrickSpawner>().SpawnBricks();
         }
     }
@@ -198,7 +198,7 @@ public class GameManager : Singleton<GameManager>
     {
         lives--;
         SendLivesToArduino();
-
+        currentBall.GetComponent<BallController>().SpawnDeathEffect();
         if (lives > 0)
         {
                 if (currentBall != null)

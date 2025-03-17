@@ -171,3 +171,4 @@ MonoBehaviour:
   wallImpactRandomFactor: 0.1
   HitBrickEffect: {fileID: 8300000, guid: fdd1508074fa4934b915b3af59175566, type: 3}
   HitAnyEffect: {fileID: 8300000, guid: dfd1949c8a47d5d46b233ea353ff2898, type: 3}
+  destructionEffect: {fileID: 1429954232896169633, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
