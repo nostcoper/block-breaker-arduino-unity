@@ -4,63 +4,182 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
+
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] public int NumberOfPlayers = 1; //Se cambio de private a public
+    [SerializeField] public int NumberOfPlayers = 1;
     public int score = 0;
     public int lives = 3;
     public GameObject ballPrefab;
     public GameObject paddlePrefab;
     private GameObject currentBall;
     public List<GameObject> paddles = new List<GameObject>();
+    public KeyboardController keyboardController;
+    public ArduinoController arduinoController;
+    public GameManagerUI GameManagerUI;
 
+    void OnEnable(){
+        ArduinoConection.Instance.IsConnected();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
+    void OnDisable(){
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        score = 0;
+        lives = 3;
+        
+        SpawnElements();
+        GetComponent<BrickSpawner>().currentHitpoint = 1;
+        GetComponent<BrickSpawner>().currentProgression = -1;
+        GetComponent<BrickSpawner>().SpawnBricks();
+
+        if (GameManagerUI.instance != null){
+            GameManagerUI.instance.UpdateScoreUI(score);
+            GameManagerUI.instance.RegisterBall(currentBall);
+            GameManagerUI.instance.RegisterPaddles(paddles);
+        }
+    }
+
+    public void CheckAllBlocksDestroyed()
+    {
+        List<GameObject> remainingBlocks =  GetComponent<BrickSpawner>().bricks;
+        Debug.Log(remainingBlocks.Count);
+        if (remainingBlocks.Count == 0)
+        {
+            Debug.Log("¡Todos los bloques han sido destruidos!");
+            GetComponent<BrickSpawner>().SpawnBricks();
+        }
+    }
+
+    public void removeBrick(GameObject gameObject){
+        GetComponent<BrickSpawner>().bricks.Remove(gameObject);
+    }
+
+    
     void Start()
     {
         Debug.Log("Num Jugadores: " + NumberOfPlayers);
-
-       
-        
-        SpawnPaddle();
-        SpawnBall();
+        SpawnElements();
         StartCoroutine(EnviarVidaArduino());
 
         if (GameManagerUI.instance != null){
             GameManagerUI.instance.UpdateScoreUI(score);
-            // Registrar la pelota y los paddles en el GameManagerUI
             GameManagerUI.instance.RegisterBall(currentBall);
             GameManagerUI.instance.RegisterPaddles(paddles);
         }
 
     }
 
-    IEnumerator EnviarVidaArduino()
+        void Update(){
+            ManageControllers();
+        }
+
+        public void SpawnElements(){
+            SpawnPaddle();
+            SpawnBall();
+        }
+
+        IEnumerator EnviarVidaArduino()
+        {
+            yield return new WaitForSeconds(0.5f);
+            SendLivesToArduino();
+        } 
+
+        void SpawnPaddle()
     {
-        yield return new WaitForSeconds(0.5f);
-        SendLivesToArduino();
+        float screenWidth = Camera.main.orthographicSize * 2.0f * Camera.main.aspect;
+        float paddleWidth = paddlePrefab.GetComponent<SpriteRenderer>().bounds.size.x;
+        float usableWidth = screenWidth * 0.8f;
+        
+        int paddlesToCreate = ArduinoConection.Instance.IsConnected() ? NumberOfPlayers : 1;
+        
+        DestroyExistingPaddles();
+        
+        float totalPaddlesWidth = paddleWidth * paddlesToCreate;
+        float spacing = (usableWidth - totalPaddlesWidth) / (paddlesToCreate + 1);
+        float startX = -screenWidth / 2 + (screenWidth - usableWidth) / 2 + spacing;
+        
+        for (int i = 0; i < paddlesToCreate; i++) {
+            Debug.Log($"Instanciando paddle {i}");
+            float xPos = startX + (paddleWidth / 2) + i * (paddleWidth + spacing);
+            GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(xPos, -3.5f, 0), Quaternion.identity);
+            AssignController(newPaddle, i);
+            if (GameManagerUI.instance != null && GameManagerUI.instance.gameOverPanel.activeSelf)
+            {
+                newPaddle.SetActive(false);
+            }
+
+            paddles.Add(newPaddle);
+        }
+        
+        UpdateGameUI();
     }
 
-    void SpawnPaddle()
+
+    private void DestroyExistingPaddles()
     {
-        paddlePrefab = Resources.Load<GameObject>("Prefabs/Paddle");
+        foreach (var paddle in paddles) {
+            if (paddle != null) {
+                Destroy(paddle);
+            }
+        }
+        paddles.Clear();
+    }
+
+    private void AssignController(GameObject paddle, int playerIndex)
+    {
+        PaddleController controller = paddle.GetComponent<PaddleController>();
+        if (playerIndex == 0 && ArduinoConection.Instance.IsConnected()) {
+            controller.SetController(arduinoController);
+        } else {
+            controller.SetController(keyboardController);
+        }
+    }
+
+    void ManageControllers()
+    {
+        bool arduinoConnected = ArduinoConection.Instance.IsConnected();
+        int currentPaddleCount = paddles.Count;
+        int targetPaddleCount = arduinoConnected ? NumberOfPlayers : 1;
         
-        GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
-        paddles.Add(newPaddle);
-        
-        Debug.Log("Holaaa");
-        // for (int i = 0; i < NumberOfPlayers; i++){
-        //     Debug.Log("instanciado " + i);
-        //     GameObject newPaddle = Instantiate(paddlePrefab, new Vector3(0, -3.5f, 0), Quaternion.identity);
-        //     paddles.Add(newPaddle);
-        // }
-        
+        if (currentPaddleCount != targetPaddleCount) {
+            SpawnPaddle();
+            return;
+        }
+
+        // Add this check
+        if (currentPaddleCount > 0 && paddles[0] != null) {
+            PaddleController paddleController = paddles[0].GetComponent<PaddleController>();
+            bool usingArduino = paddleController.Controller is ArduinoController;
+            
+            if (arduinoConnected && !usingArduino) {
+                Debug.Log("Arduino conectado. Jugador 1 usa Arduino.");
+                paddleController.SetController(arduinoController);
+            } 
+            else if (!arduinoConnected && usingArduino) {
+                Debug.Log("Arduino desconectado. Jugador 1 usa teclado.");
+                paddleController.SetController(keyboardController);
+            }
+        }
+    }
+
+    private void UpdateGameUI()
+    {
+        if (GameManagerUI.instance != null) {
+            GameManagerUI.instance.RegisterPaddles(paddles);
+        }
     }
 
     void SpawnBall()
     {
-        
-        ballPrefab = Resources.Load<GameObject>("Prefabs/Ball");
         Debug.Log(ballPrefab);
         if (currentBall == null)
         {
@@ -89,18 +208,13 @@ public class GameManager : Singleton<GameManager>
         {
             if (GameManagerUI.instance != null)
                 GameManagerUI.instance.ShowGameOver(score);
+
         }
     }
 
-    void SendLivesToArduino()
+     void SendLivesToArduino()
     {
-        if (ArduinoControllerPot.Instance != null)
-            ArduinoControllerPot.Instance.SendToArduino("L:" + lives);
-    }
-
-    public void RedirectScene(String name){
-        SceneManager.LoadScene(name);
-    }
+        if (ArduinoConection.Instance != null)
+            ArduinoConection.Instance.SendCommand("L:" + lives);
+    } 
 }
-
-

@@ -39,7 +39,7 @@ public class GameManagerUI : MonoBehaviour
     }
 
     void Start(){
-        gameOverExit.onClick.AddListener(()=>GameManager.Instance.RedirectScene("MainMenu"));
+        gameOverExit.onClick.AddListener(OnExitButton);
     }
 
     // Actualiza el texto del puntaje
@@ -112,8 +112,6 @@ public class GameManagerUI : MonoBehaviour
             {
                 scoreText.gameObject.SetActive(false);
             }
-
-            //Destruir los ladrillos
             DestroyAllBricks();
         }
     }
@@ -121,11 +119,11 @@ public class GameManagerUI : MonoBehaviour
     public void OnRestartButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.SpawnElements();
     }
 
-    // Se asigna al bot�n "Salir"
     public void OnExitButton()
     {
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu");
     }
 }

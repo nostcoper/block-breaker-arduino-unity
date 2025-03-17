@@ -801,7 +801,8 @@ MonoBehaviour:
   exitBtn: {fileID: 1793794191}
   ballPrefab: {fileID: 7594298400835398744, guid: 1830a6004899c2248962fcf8ffbf39b7, type: 3}
   paddlePrefab: {fileID: 1134469212216760597, guid: 0ce208a279da63f46a6551aea88734e2, type: 3}
-  numberOfPlayers: 2
+  theme: {fileID: 8300000, guid: 8b1ee7df7f62231429310644140acee1, type: 3}
+  musicVolume: 0.5
 --- !u!4 &1615874706
 Transform:
   m_ObjectHideFlags: 0

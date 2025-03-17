@@ -1,67 +1,61 @@
 using UnityEngine;
-using System.IO.Ports;
 
-public class ArduinoController : MonoBehaviour
+[CreateAssetMenu(fileName = "ArduinoController", menuName = "Controllers/Arduino")]
+public class ArduinoController : ScriptableObject, IPaddleController
 {
-    // Cambia "COM3" por el puerto al que está conectado tu Arduino
-    SerialPort sp = new SerialPort("COM4", 9600);
-
-    void Start()
+    public bool GetLaunchInput()
     {
-        // Configuramos el tiempo de espera de lectura y abrimos el puerto
-        sp.ReadTimeout = 50;
-        try
+        throw new System.NotImplementedException();
+    }
+
+    public float GetMovementInput()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Movement(GameObject Paddle, float leftBoundary, float rightBoundary)
+    {
+        Debug.Log("MOVIENDO");
+        if (ArduinoConection.Instance.IsConnected())
         {
-            sp.Open();
-            Debug.Log("Puerto serial abierto correctamente.");
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Error al abrir el puerto serial: " + e.Message);
+            try
+            {
+                string line = ArduinoConection.Instance.ReadCommand();
+                Debug.Log("Dato recibido: " + line);
+                if (line.StartsWith("P:"))
+                {
+                    string valueStr = line.Substring(2).Trim();
+                    int potValue;
+                    if (int.TryParse(valueStr, out potValue))
+                    {
+                        float normalized = (float)potValue / 1023f;
+                        float newX = Mathf.Lerp(leftBoundary, rightBoundary, normalized);
+                        if (Paddle != null)
+                        {
+                            Vector3 pos = Paddle.transform.position;
+                            pos.x = newX;
+                            Paddle.transform.position = pos;
+                            Debug.Log("Moviendo paddle a X = " + newX);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Paddle no asignado en el Inspector.");
+                        }
+                    }
+                }
+            }
+            catch (System.TimeoutException)
+            {
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("Error leyendo del serial: " + e.Message);
+            }
         }
     }
 
-    void Update()
+    public void SetSpeed(float value)
     {
-        // Ejemplo de control mediante pulsaciones de teclas:
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            EnviarComando("R");
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            EnviarComando("G");
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            EnviarComando("Y");
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            EnviarComando("O");
-        }
-    }
-
-    // Función para enviar comandos al Arduino
-    void EnviarComando(string comando)
-    {
-        if (sp.IsOpen)
-        {
-            sp.Write(comando);
-            Debug.Log("Comando enviado: " + comando);
-        }
-        else
-        {
-            Debug.LogWarning("El puerto serial no está abierto.");
-        }
-    }
-
-    void OnApplicationQuit()
-    {
-        // Al cerrar la aplicación, se cierra el puerto serial
-        if (sp.IsOpen)
-        {
-            sp.Close();
-        }
+        throw new System.NotImplementedException();
     }
 }

@@ -762,6 +762,7 @@ GameObject:
   - component: {fileID: 710529848}
   - component: {fileID: 710529847}
   - component: {fileID: 710529849}
+  - component: {fileID: 710529850}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -803,11 +804,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710529846}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddec1f614a6106948bf637f6d5f508cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &710529850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710529846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb24c26feb2c6364ba3e2e47227f5e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedPort: COM4
+  baudRate: 9600
+  autoConnect: 1
+  readTimeout: 50
+  isConnected: 0
 --- !u!1 &739592979
 GameObject:
   m_ObjectHideFlags: 0
