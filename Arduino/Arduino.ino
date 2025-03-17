@@ -1,10 +1,9 @@
 #include <Arduino.h>
 
-// Pines para los LEDs (cada uno representa una vida)
-const int ledRojo = 10;
-const int ledVerde = 9;
-const int ledAmarillo = 8;
-
+const int ledRojo = 11;
+const int ledVerde = 10;
+const int ledAmarillo = 9;
+const int pulsador = 7;
 // Pin del potenciómetro
 const int potPin = A0;
 
@@ -43,11 +42,14 @@ void setup() {
   pinMode(ledRojo, OUTPUT);
   pinMode(ledVerde, OUTPUT);
   pinMode(ledAmarillo, OUTPUT);
+  pinMode(pulsador, INPUT);
   
   // Enciende todos los LEDs al inicio (3 vidas)
   digitalWrite(ledRojo, HIGH);
   digitalWrite(ledVerde, HIGH);
   digitalWrite(ledAmarillo, HIGH);
+
+
 }
 
 void loop() {
@@ -68,5 +70,12 @@ void loop() {
     Serial.print("P:");
     Serial.println(potValue);
     lastPrintTime = millis();
+  }
+
+  if (digitalRead(pulsador) == 1){
+      Serial.print("Launch:");
+      Serial.println("true");
+  }else{
+    
   }
 }

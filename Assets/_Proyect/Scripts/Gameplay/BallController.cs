@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BallController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class BallController : MonoBehaviour
     private bool isLaunched = false;
     [SerializeField] AudioClip HitBrickEffect;
     [SerializeField] AudioClip HitAnyEffect;
+    public GameObject destructionEffect; 
 
     void Start()
     {
@@ -26,7 +28,7 @@ public class BallController : MonoBehaviour
             {
                 transform.position = paddle.transform.position + new Vector3(0, 0.5f, 0);
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (paddle.GetComponent<PaddleController>().Controller.GetLaunchInput())
             {
                 isLaunched = true;
                 LaunchBall();
@@ -127,6 +129,12 @@ public class BallController : MonoBehaviour
         if (paddle != null)
         {
             transform.position = paddle.transform.position + new Vector3(0, 0.5f, 0);
+        }
+    }
+    public void SpawnDeathEffect(){
+        if (destructionEffect != null)
+        {
+            GameObject effect = Instantiate(destructionEffect, transform.position, Quaternion.identity);
         }
     }
 }

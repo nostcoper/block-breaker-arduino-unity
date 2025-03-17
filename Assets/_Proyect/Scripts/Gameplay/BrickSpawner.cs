@@ -8,16 +8,14 @@ public class BrickSpawner : MonoBehaviour
     public int columns = 10;
     public float SpacingX = 1.6f;
     public float SpacingY = 0.6f;
-    public int currentProgression = -1;
+    public int currentProgression = 0;
     public List<GameObject> bricks = new List<GameObject>();
 
     public int currentHitpoint = 1;
     
     public void SpawnBricks()
     {
-        IncreaseProgression();
         bricks.Clear();
-        
         float totalWidth = (columns - 1) * SpacingX;
         float screenCenterX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, 0, 0)).x;
         Vector2 startPos = new Vector2(screenCenterX - (totalWidth / 2), 4f);
@@ -30,7 +28,6 @@ public class BrickSpawner : MonoBehaviour
 
                 GameObject brick = Instantiate(brickPrefab, pos, Quaternion.identity);
                 
-                // Sistema de progresión que aumenta la vida según la fila y la progresión
                 if (row < currentProgression)
                 {
                     brick.GetComponent<Brick>().hitPoints = currentHitpoint + 1;
@@ -40,31 +37,31 @@ public class BrickSpawner : MonoBehaviour
                     brick.GetComponent<Brick>().hitPoints = currentHitpoint;
                 }
                 
-                // Add to the list
                 bricks.Add(brick);
             }
         }
         
-        // Register the bricks with GameManagerUI
         if (GameManagerUI.instance != null)
         {
             GameManagerUI.instance.RegisterBricks(bricks);
         }
     }
     
-    // Method to increase progression
     public void IncreaseProgression()
     {
+        BallController ball = GameObject.FindWithTag("Ball").GetComponent<BallController>();
         currentProgression++;
-        
-        // Si la progresión alcanza el número de filas, aumenta currentHitpoint y reinicia progresión
         if (currentProgression >= rows)
         {
-            currentHitpoint++;
-            currentProgression = 0;  // Reinicia la progresión para comenzar un nuevo ciclo
+            if (currentHitpoint < 3){
+                currentHitpoint++;
+            }else{
+                ball.speed+=0.5f;
+            }
             
-            // Opcional: Añadir límite a la vida máxima si lo deseas
-            // if (currentHitpoint > 5) currentHitpoint = 5;
+            currentProgression = 0;
         }
+
+        ball.speed+=0.5f;
     }
 }

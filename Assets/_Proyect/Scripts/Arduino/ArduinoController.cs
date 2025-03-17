@@ -5,7 +5,21 @@ public class ArduinoController : ScriptableObject, IPaddleController
 {
     public bool GetLaunchInput()
     {
-        throw new System.NotImplementedException();
+        string line = ArduinoConection.Instance.ReadCommand();
+        
+        if (string.IsNullOrEmpty(line))
+            return false;
+        Debug.Log(line);
+        if (line.StartsWith("Launch:"))
+        {
+            string valueStr = line.Substring(7).Trim();
+            if (valueStr == "true")
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     public float GetMovementInput()
@@ -15,7 +29,6 @@ public class ArduinoController : ScriptableObject, IPaddleController
 
     public void Movement(GameObject Paddle, float leftBoundary, float rightBoundary)
     {
-        Debug.Log("MOVIENDO");
         if (ArduinoConection.Instance.IsConnected())
         {
             try
