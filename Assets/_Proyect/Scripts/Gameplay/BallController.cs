@@ -8,10 +8,13 @@ public class BallController : MonoBehaviour
     public float wallImpactRandomFactor = 0.1f;
     private Rigidbody2D rb;
     private bool isLaunched = false;
+    [SerializeField] AudioClip HitBrickEffect;
+    [SerializeField] AudioClip HitAnyEffect;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.angularVelocity = 0.2f;
     }
 
     void Update()
@@ -36,6 +39,9 @@ public class BallController : MonoBehaviour
         float randomAngle = Random.Range(-30f, 30f);
         Vector2 direction = Quaternion.Euler(0, 0, randomAngle) * Vector2.up;
         rb.linearVelocity = direction * speed;
+        
+        // Añade un poco de rotación inicial
+        rb.angularVelocity = Random.Range(-90f, 90f);
     }
 
     void FixedUpdate()
@@ -74,6 +80,20 @@ public class BallController : MonoBehaviour
         {
             HandleWallOrBlockCollision();
         }
+        AplicarGiroEnColision(collision);
+
+        if (collision.gameObject.CompareTag("Brick")){
+            AudioManager.Instance.PlayOneShotSound(HitBrickEffect);
+        }else{
+            AudioManager.Instance.PlayOneShotSound(HitAnyEffect);
+        }
+    }
+
+    void AplicarGiroEnColision(Collision2D collision)
+    {
+        Vector2 normalImpacto = collision.contacts[0].normal;
+        float factorGiro = Vector2.Dot(normalImpacto, rb.linearVelocity.normalized);
+        rb.angularVelocity += factorGiro * 20f; 
     }
 
     void HandlePaddleCollision(Collision2D collision)
@@ -87,7 +107,6 @@ public class BallController : MonoBehaviour
 
     void HandleWallOrBlockCollision()
     {
-
         Vector2 velocity = rb.linearVelocity;
         velocity.x += Random.Range(-wallImpactRandomFactor, wallImpactRandomFactor);
         velocity.y += Random.Range(-wallImpactRandomFactor, wallImpactRandomFactor);
@@ -103,6 +122,7 @@ public class BallController : MonoBehaviour
     {
         isLaunched = false;
         rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
         GameObject paddle = GameObject.FindWithTag("Paddle");
         if (paddle != null)
         {

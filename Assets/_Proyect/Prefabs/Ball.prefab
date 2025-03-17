@@ -165,4 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ec77d8f1beb3047958e6cc13b9f6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 8
+  minVerticalVelocity: 2
+  paddleImpactRandomFactor: 0.2
+  wallImpactRandomFactor: 0.1
+  HitBrickEffect: {fileID: 8300000, guid: fdd1508074fa4934b915b3af59175566, type: 3}
+  HitAnyEffect: {fileID: 8300000, guid: dfd1949c8a47d5d46b233ea353ff2898, type: 3}

@@ -7,7 +7,7 @@ public class PaddleController : MonoBehaviour
     private float leftBoundary;
     private float rightBoundary;
     private float paddleHalfWidth;
-    public IPaddleController Controller;
+    [SerializeField] public IPaddleController Controller;
     
     void Start()
     {
@@ -24,10 +24,14 @@ public class PaddleController : MonoBehaviour
         }
         CalculateScreenBoundaries();
     }
+
     
     public void SetController(IPaddleController newController)
     {
         Controller = newController;
+        if (newController is  KeyboardController){
+            Controller.SetSpeed(speed);
+        }
     }
 
     void CalculateScreenBoundaries()
@@ -40,10 +44,7 @@ public class PaddleController : MonoBehaviour
     
     void FixedUpdate()
     {
-        float input = Controller.GetMovementInput();
-        Vector3 pos = transform.position;
-        pos.x += input * speed * Time.deltaTime;
-        pos.x = Mathf.Clamp(pos.x, leftBoundary, rightBoundary);
-        transform.position = pos;
+
+        Controller.Movement(this.gameObject, leftBoundary, rightBoundary);
     }
 }

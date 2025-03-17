@@ -2,183 +2,185 @@ using UnityEngine;
 using System.IO.Ports;
 using System.Collections.Generic;
 
-public class ArduinoConection : MonoBehaviour
+public class ArduinoConection : Singleton<ArduinoConection>
 {
     [Header("Configuración del Puerto Serial")]
     [SerializeField] private string selectedPort;
     [SerializeField] private int baudRate = 9600;
     [SerializeField] private bool autoConnect = true;
-    
+    [SerializeField] private int readTimeout = 50;
+
     [Header("Estado")]
     [SerializeField] private bool isConnected = false;
-    
+
     private SerialPort sp;
     private string[] availablePorts;
-    
+    private float reconnectInterval = 2f;
+    private float lastReconnectAttempt = 0f;
+
+    void OnEnable(){
+        RefreshPortList();
+        InitializeConnection();
+    }
+
     void Update(){
-        if (!isConnected){
-            RefreshPortList();
+        if (isConnected && !CheckConnectivity()){
+            Debug.Log("Se perdió la conexión. Preparando reconexión...");
+        }
+        
+        if (!isConnected && autoConnect && Time.time > lastReconnectAttempt + reconnectInterval){
+            lastReconnectAttempt = Time.time;
+            InitializeConnection();
+        }
+    }
+
+    private void InitializeConnection(){
+        RefreshPortList();
+        if (autoConnect && availablePorts.Length > 0){
             TryConnectToAnyAvailablePort();
         }
     }
 
-    void Start()
-    {
-        RefreshPortList();
-        
-        if (autoConnect)
-        {
-            TryConnectToAnyAvailablePort();
+    public bool CheckConnectivity(){
+        if (sp == null){
+            isConnected = false;
+            return false;
+        }
+
+        try{
+            if (!sp.IsOpen){
+                isConnected = false;
+                return false;
+            }
+
+            sp.Write(new byte[] { 0 }, 0, 0);
+
+            return true;
+        }
+        catch (System.IO.IOException){
+            Debug.LogWarning("Dispositivo físicamente desconectado");
+            ClosePortSafely();
+            isConnected = false;
+            return false;
+        }
+        catch (System.Exception e){
+            Debug.LogError("Error de conectividad: " + e.Message);
+            ClosePortSafely();
+            isConnected = false;
+            return false;
+        }
+    }
+
+    private void ClosePortSafely(){
+        if (sp != null && sp.IsOpen){
+            try{
+                sp.Close();
+            }
+            catch (System.Exception e){
+                Debug.LogWarning("Error al cerrar el puerto: " + e.Message);
+            }
         }
     }
     
-    void OnEnable()
-    {
-        RefreshPortList();
-    }
-    
-    public void RefreshPortList()
-    {
+
+    public void RefreshPortList(){
         availablePorts = SerialPort.GetPortNames();
-        string portsInfo = "Puertos disponibles: ";
         
-        if (availablePorts.Length == 0)
-        {
-            portsInfo += "Ninguno";
+        if (Debug.isDebugBuild){
+            string portsInfo = "Puertos disponibles: " + (availablePorts.Length == 0 ? "Ninguno" : string.Join(", ", availablePorts));
+            Debug.Log(portsInfo);
         }
-        else
-        {
-            portsInfo += string.Join(", ", availablePorts);
-        }
-        
-        Debug.Log(portsInfo);
     }
-    
-    public void TryConnectToAnyAvailablePort()
-    {
-        if (availablePorts.Length == 0)
-        {
+
+    public void TryConnectToAnyAvailablePort(){
+        if (availablePorts.Length == 0){
             Debug.LogWarning("No hay puertos COM disponibles");
             return;
         }
-        
-        bool connected = false;
-        
-        foreach (string port in availablePorts)
-        {
-            try
-            {
-                Debug.Log("Intentando conectar al puerto " + port);
-                
-                if (sp != null && sp.IsOpen)
-                {
-                    sp.Close();
-                }
-                
-                sp = new SerialPort(port, baudRate);
-                sp.ReadTimeout = 50;
-                sp.Open();
-                
-                selectedPort = port;
-                isConnected = true;
-                connected = true;
-                Debug.Log("Conectado exitosamente al puerto " + port);
-                break;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogWarning("No se pudo conectar al puerto " + port + ": " + e.Message);
+
+        ClosePortSafely();
+        isConnected = false;
+
+        foreach (string port in availablePorts){
+            if (ConnectToPortInternal(port)){
+                return;
             }
         }
-        
-        if (!connected)
-        {
-            Debug.LogError("No se pudo conectar a ningún puerto COM disponible");
-        }
+
+        Debug.LogError("No se pudo conectar a ningún puerto COM disponible");
     }
-    
-    public void ConnectToPort(string portName)
-    {
-        if (sp != null && sp.IsOpen)
-        {
-            sp.Close();
-            isConnected = false;
-        }
+
+    public void ConnectToPort(string portName){
+        ClosePortSafely();
+        isConnected = false;
         
-        try
-        {
+        ConnectToPortInternal(portName);
+    }
+
+    private bool ConnectToPortInternal(string portName){
+        try{
+            Debug.Log("Intentando conectar al puerto " + portName);
+            
             sp = new SerialPort(portName, baudRate);
-            sp.ReadTimeout = 50;
+            sp.ReadTimeout = readTimeout;
+
             sp.Open();
             selectedPort = portName;
             isConnected = true;
+            
             Debug.Log("Conectado exitosamente al puerto " + portName);
+            
+            return true;
         }
-        catch (System.Exception e)
-        {
-            isConnected = false;
-            Debug.LogError("Error al conectar al puerto " + portName + ": " + e.Message);
-        }
-    }
-    
-    // Método para enviar comandos
-    public void SendCommand(string comando)
-    {
-        if (sp != null && sp.IsOpen)
-        {
-            sp.Write(comando);
-            Debug.Log("Comando enviado: " + comando);
-        }
-        else
-        {
-            Debug.LogWarning("El puerto serial no está abierto.");
+        catch (System.Exception e){
+            Debug.LogWarning("No se pudo conectar al puerto " + portName + ": " + e.Message);
+            return false;
         }
     }
-    
-    public string ReadCommand()
-    {
-        if (sp != null && sp.IsOpen && sp.BytesToRead > 0)
-        {
-            try
-            {
+
+    public void SendCommand(string comando){
+        if (CheckConnectivity()){
+            try{
+                sp.Write(comando);
+                Debug.Log("Comando enviado: " + comando);
+            }
+            catch (System.Exception e){
+                Debug.LogError("Error al enviar comando: " + e.Message);
+                isConnected = false;
+            }
+        }
+        else{
+            Debug.LogWarning("No se puede enviar el comando. Puerto serial no disponible.");
+        }
+    }
+
+    public string ReadCommand(){
+        if (CheckConnectivity() && sp.BytesToRead > 0){
+            try{
                 return sp.ReadLine();
             }
-            catch (System.Exception e)
-            {
+            catch (System.Exception e){
                 Debug.LogWarning("Error al leer datos: " + e.Message);
+                return null;
             }
         }
         return null;
     }
-    
-    public string[] GetAvailablePorts()
-    {
+
+    public string[] GetAvailablePorts(){
         return availablePorts;
     }
-    
-    public bool IsConnected()
-    {
-        return isConnected;
+
+    public bool IsConnected(){
+        return isConnected && CheckConnectivity();
     }
-    
-    void OnApplicationQuit()
-    {
-        if (sp != null && sp.IsOpen)
-        {
-            sp.Close();
-            isConnected = false;
-        }
+
+    public string GetSelectedPort(){
+        return selectedPort;
     }
-    
-    [ContextMenu("RefreshPorts()")]
-    void EditorRefreshPorts()
-    {
-        RefreshPortList();
-    }
-    
-    [ContextMenu("ConnectToAvailablePorts()")]
-    void EditorConnectToAvailablePort()
-    {
-        TryConnectToAnyAvailablePort();
+
+    void OnApplicationQuit(){
+        ClosePortSafely();
+        isConnected = false;
     }
 }
